@@ -4,68 +4,271 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TeliTelo</title>
-    <!-- Link to Google Fonts for Orbitron -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --blue: #3A78F0;
+            --bg: #000;
+            --text: #FFF;
+            --muted: #A9B4C8;
+            --line: #1B2B4F;
+            --panel: #070B14;
+            /* CHANGE THE HEADER FONT HERE (menu text). Keep the fallback after the comma. */
+            --header-font: Arial, Helvetica, sans-serif;
+        }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body {
-            font-family: 'Orbitron', sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
             margin: 0;
-            padding: 0;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
+            background: var(--bg);
+            color: var(--blue);
+        }
+
+        /* ---------- Header ---------- */
+        .site-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px 24px;
+            padding: 14px 32px;
+            border-bottom: 1px solid var(--line);
+            position: sticky;
+            top: 0;
+            background: var(--bg);
+            z-index: 10;
+        }
+        .site-header img { height: 44px; width: auto; max-width: 200px; display: block; }
+        nav ul { list-style: none; display: flex; gap: 28px; margin: 0; padding: 0; flex-wrap: wrap; }
+        nav a {
+            font-family: var(--header-font);
+            color: var(--text);
+            text-decoration: none;
+            font-size: 14px;
+            padding: 6px 0;
+            border-bottom: 2px solid transparent;
+        }
+        nav a:hover { color: var(--blue); }
+        nav a.active { color: var(--blue); border-bottom-color: var(--blue); }
+        a:focus-visible, button:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; }
+
+        /* ---------- Pages ---------- */
+        main { flex: 1; width: 100%; }
+        .page { display: none; padding: 48px 32px 96px; max-width: 1080px; margin: 0 auto; }
+        .page.active { display: block; }
+
+        h1 { font-size: 32px; margin: 0 0 12px; }
+        h2 { font-size: 20px; margin: 0 0 8px; }
+        p { color: var(--text); font-size: 14px; line-height: 1.8; max-width: 70ch; }
+        .lead { color: var(--muted); }
+
+        /* Home */
+        #home { text-align: left; display: none; max-width: none; margin: 0}
+        #home.active { display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; padding-top: 16px; }
+        #home img { max-width: 220px; height: auto; margin-bottom: =8px; }
+        .slogan { font-family: 'Orbitron', sans-serif; font-size: 28px; margin: 0 0 10px; }
+        #home .company-intro {
+	    font-family: Arial, Helvetica, sans-serif;
+            margin: 8px 0 28px;
+            padding-left: 24px;
+            border-left: 2px solid var(--blue);
+            text-align: left;
+            align-self: flex-start;
+            max-width: 640px;
+        }
+        .button {
+            display: inline-block;
+            color: var(--bg);
+            background: var(--blue);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            padding: 12px 24px;
+            border-radius: 2px;
+        }
+        .button:hover { background: #5B90F5; }
+
+        /* Products */
+        .product-list { display: grid; gap: 24px; margin-top: 32px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+        .product {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            display: flex;
+            flex-direction: column;
+        }
+        .product-image {
+            aspect-ratio: 4 / 3;
+            background: #0C1527;
+            display: flex;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            background-color: #000; /* Black background */
-            color: #3A78F0; /* Light blue font color */
+            color: var(--muted);
+            font-size: 12px;
+            overflow: hidden;
         }
-        header {
-            margin-bottom: 20px;
+        .product-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .product-body { padding: 20px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+        .product-body p { margin: 0; font-size: 13px; line-height: 1.7; color: var(--muted); }
+        .product-body ul { margin: 8px 0 0; padding-left: 18px; color: var(--text); font-size: 12px; line-height: 1.9; }
+        .product-body .button { align-self: flex-start; margin-top: auto; }
+        .product-body p + .button { margin-top: 16px; }
+        .product-list { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+
+        /* About / Contact */
+        .founders { display: grid; gap: 32px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-top: 32px; }
+        .founder { background: var(--panel); border: 1px solid var(--line); padding: 24px; display: flex; gap: 20px; align-items: flex-start; }
+        .founder-photo {
+            width: 120px; height: 150px; flex-shrink: 0;
+            background: #0C1527; color: var(--muted); font-size: 11px;
+            display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden;
         }
-        img {
-            max-width: 200px;
-            height: auto;
-        }
-        .slogan {
-            font-size: 24px;
+        .founder-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .founder p { margin: 0; font-size: 13px; line-height: 1.7; color: var(--muted); }
+        .founder .role { color: var(--text); font-size: 12px; margin-bottom: 10px; }
+        @media (max-width: 420px) { .founder { flex-direction: column; } }
+        .contact-list { margin-top: 32px; display: grid; gap: 20px; }
+        .contact-list div { border-left: 2px solid var(--blue); padding-left: 16px; }
+        .contact-list span { display: block; font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+        .contact-list a, .contact-list address { color: var(--text); font-size: 16px; text-decoration: none; font-style: normal; line-height: 1.7; }
+        .contact-list a:hover { color: var(--blue); }
+
+        /* Footer */
+        footer {
             text-align: center;
-	    margin-bottom: 10px;
+            font-size: 12px;
+            color: var(--text);
+            font-family: Calibri, sans-serif;
+            padding: 20px;
+            border-top: 1px solid var(--line);
         }
-	.description {
-	    font-size: 14px;
-            text-align: center;
-            color: #FFF; /* White font color */
-	}
-	footer {
-	    position: absolute;
-	    bottom: 10px;
-	    width: 100%;
-	    text-align: center;
-	    font-size: 12px;
-	    color: #FFF;
-	    font-family: Calibri, sans-serif;
-	}
+        footer p { margin: 0 auto; max-width: none; font-size: 12px; }
+        footer a { color: var(--text); }
+
+        @media (max-width: 600px) {
+            .site-header { padding: 12px 16px; justify-content: center; }
+            nav ul { gap: 18px; justify-content: center; }
+            .page { padding: 32px 16px 64px; }
+            h1 { font-size: 24px; }
+            .slogan { font-size: 22px; }
+        }
     </style>
 </head>
+
 <body>
 
-    <header>
-        <!-- Insert the path to your JPEG logo file in the src attribute -->
+<header class="site-header">
+    <a href="#home" aria-label="TeliTelo home">
         <img src="Telitelo Logo.jpeg" alt="TeliTelo Technology Logo">
-    </header>
+    </a>
+    <nav aria-label="Main">
+        <ul>
+            <li><a href="#home" data-page="home">Home</a></li>
+            <li><a href="#products" data-page="products">Products</a></li>
+            <li><a href="#contact" data-page="contact">Contact Us</a></li>
+        </ul>
+    </nav>
+</header>
 
-    <div class="slogan">
-        <!-- Insert your company slogan here -->
-        <p>Infinite Imagine</p>
-    </div>
+<main>
 
-    <div class="description">
-        <p>Stay tuned to our product</p>
-    </div>
+    <!-- ================= HOME ================= -->
+    <section id="home" class="page">
+        <img src="Telitelo Logo.jpeg" alt="TeliTelo Technology Logo">
+        <div class="slogan">Infinite Imagine</div>
+        <!-- Replace the X's below with your company description -->
+        <p class="company-intro">Our company specialises in providing technology services or solutions by creating our own product. Our vision is to build a product that helps people in their daily lives. The company’s current direction focuses on clone-to-clone communication, which encompasses all types of communication that can replace human-to-human and human-to-AI communication in our daily lives. The company’s first product is a social media application that aims to create simplicity and positive vibes for daily life sharing.</p>
+        <a class="button" href="#products">View products</a>
+    </section>
 
-    <footer>
-	    <p>Contact us at: contact@telitelo.com</p>
-    </footer>
+    <!-- ================= PRODUCTS ================= -->
+    <section id="products" class="page">
+        <h1>Products</h1>
+        <p class="lead">Explore what TeliTelo has built.</p>
+
+        <div class="product-list">
+
+            <!-- PRODUCT 1 -->
+            <article class="product">
+                <div class="product-image">
+                    <!-- Replace "Product image" with: <img src="product1.jpg" alt="Product 1 name"> -->
+                    <img src="HiLikes Logo (ver. 02).png" alt="HiLikes">
+                </div>
+                <div class="product-body">
+                    <h2>HiLikes</h2>
+                    <p>A simple and positive place for daily life sharing. It is the "straight to the point" photo sharing app to share your life with friends and discover theirs</p>
+                    <!-- Replace the link below with your product website -->
+                    <a class="button" href="https://hi-likes.co/" target="_blank" rel="noopener">Visit website</a>
+                </div>
+            </article>
+
+            <!-- PRODUCT 2 -->
+            <article class="product">
+                <div class="product-image">
+                    <!-- Replace "Product image" with: <img src="product2.jpg" alt="Product 2 name"> -->
+                    <img src="skeleton-ai.com Logo.png" alt="skeleton-ai.com">
+                </div>
+                <div class="product-body">
+                    <h2>skeleton-ai.com</h2>
+                    <p>A Clone-based Communication & Collaboration Platform that can support all types of communication (meetings, interviews, etc.), reducing the cost (money & time) of human-to-human communication.</p>
+                    <a class="button" href="https://skeleton-ai.com/" target="_blank" rel="noopener">Visit website</a>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- ================= CONTACT US ================= -->
+    <section id="contact" class="page">
+        <h1>Contact Us</h1>
+        <p class="lead">Questions about our products? Get in touch.</p>
+        <div class="contact-list">
+            <div>
+                <span>Email</span>
+                <a href="mailto:contact@telitelo.com">contact@telitelo.com</a>
+            </div>
+            <div>
+                <span>Address</span>
+                <!-- Replace with your company address -->
+                <address>Lorong Alor Akar 37, 25250 Kuantan, Pahang Malaysia.</address>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <p>&reg; 2026 Telitelo Technology All Rights Reserved.</p>
+</footer>
+
+<script>
+    // Simple page switching: each nav link shows the matching section.
+    (function () {
+        var pages = ['home', 'products', 'contact'];
+        var titles = { home: 'TeliTelo', products: 'Products | TeliTelo', contact: 'Contact Us | TeliTelo' };
+
+        function show() {
+            var id = (location.hash || '#home').slice(1);
+            if (pages.indexOf(id) === -1) id = 'home';
+            pages.forEach(function (p) {
+                document.getElementById(p).classList.toggle('active', p === id);
+            });
+            document.querySelectorAll('nav a').forEach(function (a) {
+                var on = a.getAttribute('data-page') === id;
+                a.classList.toggle('active', on);
+                if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+            });
+            document.title = titles[id];
+            window.scrollTo(0, 0);
+        }
+
+        window.addEventListener('hashchange', show);
+        show();
+    })();
+</script>
 
 </body>
 </html>
